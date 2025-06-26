@@ -1,0 +1,12 @@
+2025-06-26 18:42:59,532 | INFO | Model and scaler loaded successfully.
+2025-06-26 18:42:59,542 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-26 18:42:59,542 | INFO | [33mPress CTRL+C to quit[0m
+2025-06-26 18:43:47,016 | INFO | Model and scaler loaded successfully.
+2025-06-26 18:43:47,028 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-26 18:43:47,028 | INFO | [33mPress CTRL+C to quit[0m
+2025-06-26 20:24:03,768 - INFO - \u2705 Model and scaler loaded successfully.
+2025-06-26 20:24:03,783 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-26 20:24:03,784 - INFO - [33mPress CTRL+C to quit[0m
