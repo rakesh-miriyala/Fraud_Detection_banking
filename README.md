@@ -12,20 +12,8 @@ This project detects fraudulent credit card transactions using a Machine Learnin
 - 🗃️ Secure user data management with SQLite
 
 ## 📁 Project Structure
-fraud_detection/
-│
-├── app/
-│ ├── app.py # Main Flask application
-│ ├── templates/ # HTML templates
-│ └── static/ # Static files like CSS, JS, etc.
-├── model/
-│ ├── fraud_model.pkl # Trained machine learning model
-│ └── scaler.pkl # Scaler used during training
-├── data/
-│ └── creditcard.csv # Sample data for defaults
-├── blockchain.py # Blockchain implementation
-├── requirements.txt # Project dependencies
-└── README.md # You're here!
+![image](https://github.com/user-attachments/assets/c3f96f07-36e1-4d91-923c-54b78f927007)
+
 
 ## 🛠️ Setup Instructions
 
