@@ -1,2 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
 
-.idea/instance/ 
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# Virtual Environments
+.venv/
+env/
+ENV/
+venv/
+*.env
+
+# Logs and Output Files
+*.log
+*.csv
+logs/
+batch_output.csv
+prediction_logs.csv
+
+# SQLite and DB Files
+*.sqlite3
+*.db
+instance/
+
+# IDEs and Editors
+.vscode/
+.idea/
+
+# Flask Static/Upload Folders
+static/batch_output.csv
+static/__pycache__/
+
+# Compiled Files / Cache
+*.swp
+.DS_Store
+Thumbs.db
+
+# Java-related Files
+*.jar
