@@ -16,7 +16,7 @@ from xgboost import XGBClassifier
 
 # Create necessary folders
 os.makedirs('./model', exist_ok=True)
-os.makedirs('./visuals', exist_ok=True)
+os.makedirs('./app/static/visuals', exist_ok=True)
 
 # Load dataset
 df = pd.read_csv('./data/creditcard.csv')
@@ -65,7 +65,7 @@ plt.title("Confusion Matrix")
 plt.xlabel("Predicted")
 plt.ylabel("Actual")
 plt.tight_layout()
-plt.savefig("./visuals/confusion_matrix.png")
+plt.savefig("./app/static/visuals/confusion_matrix.png")
 plt.close()
 
 # 📈 ROC Curve
@@ -83,7 +83,7 @@ plt.ylabel('True Positive Rate')
 plt.title('ROC Curve')
 plt.legend(loc='lower right')
 plt.tight_layout()
-plt.savefig("./visuals/roc_curve.png")
+plt.savefig("./app/static/visuals/roc_curve.png")
 plt.close()
 
 # 🧠 SHAP Explainability
@@ -93,7 +93,7 @@ shap_values = explainer(X_test)
 # Summary plot
 shap.summary_plot(shap_values, X_test, show=False)
 plt.tight_layout()
-plt.savefig('./visuals/shap_summary_plot.png')
+plt.savefig('./app/static/visuals/shap_summary_plot.png')
 plt.close()
 
 # Force plot for a single prediction
@@ -101,7 +101,7 @@ example = X_test.iloc[[0]]
 force_plot = shap.force_plot(explainer.expected_value, shap_values[0].values, feature_names=X_test.columns)
 
 # Save as interactive HTML
-shap.save_html('./visuals/shap_force_plot.html', force_plot)
+shap.save_html('./app/static/visuals/shap_force_plot.html', force_plot)
 
 
 print("✅ Visualizations (confusion matrix, ROC, SHAP) saved.")

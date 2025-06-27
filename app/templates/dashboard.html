@@ -1,34 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Fraud Detection Dashboard</title>
-  <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="container mt-4">
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="/">FraudApp</a>
+    <div class="ms-auto">
+      <a class="btn btn-outline-primary me-2" href="{{ url_for('dashboard') }}">Dashboard</a>
+      <a class="btn btn-outline-danger" href="{{ url_for('logout') }}">Logout</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
   <h1 class="text-center mb-4">📊 Fraud Detection Dashboard</h1>
 
   <div class="row">
     <div class="col-md-6 mb-4">
-      <h5>Confusion Matrix</h5>
-      <img src="{{ url_for('static', filename='./visuals/confusion_matrix.png') }}" class="img-fluid rounded border">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Confusion Matrix</h5>
+          <img src="{{ url_for('static', filename='visuals/confusion_matrix.png') }}" class="img-fluid rounded border">
+        </div>
+      </div>
     </div>
     <div class="col-md-6 mb-4">
-      <h5>ROC Curve</h5>
-      <img src="{{ url_for('static', filename='./visuals/roc_curve.png') }}" class="img-fluid rounded border">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">ROC Curve</h5>
+          <img src="{{ url_for('static', filename='visuals/roc_curve.png') }}" class="img-fluid rounded border">
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-12 mb-4">
-      <h5>SHAP Summary Plot</h5>
-      <img src="{{ url_for('static', filename='./visuals/shap_summary_plot.png') }}" class="img-fluid rounded border">
+  <div class="row mb-4">
+    <div class="col-md-12">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">SHAP Summary Plot</h5>
+          <img src="{{ url_for('static', filename='visuals/shap_summary_plot.png') }}" class="img-fluid rounded border">
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="text-center mt-4">
+  <div class="text-center">
     <a href="/" class="btn btn-primary">🔙 Back to Home</a>
   </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
