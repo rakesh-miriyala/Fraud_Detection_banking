@@ -2,6 +2,8 @@
 
 This project detects fraudulent credit card transactions using a Machine Learning model and securely logs the predictions on a Blockchain to ensure tamper-proof audit trails.
 
+🔗 **Live Site**: [https://fraud-detection-banking.onrender.com](https://fraud-detection-banking.onrender.com)
+
 ## 🚀 Features
 
 - 🔐 User authentication system (signup/login/logout)
@@ -10,6 +12,14 @@ This project detects fraudulent credit card transactions using a Machine Learnin
 - 🔗 Blockchain-based logging of each prediction
 - 📊 Dashboard to visualize results
 - 🗃️ Secure user data management with SQLite
+
+## 🚀 Deployment
+
+The app is live at:  
+
+🌐 [https://fraud-detection-banking.onrender.com](https://fraud-detection-banking.onrender.com)
+
+Deployment via [Render](https://render.com), using Gunicorn for production WSGI serving.
 
 ## 📁 Project Structure
 
@@ -20,6 +30,7 @@ This project detects fraudulent credit card transactions using a Machine Learnin
 
 1. Clone the repository:
 git clone https://github.com/rakesh-miriyala/Fraud_Detection_banking.git
+
 cd Fraud_Detection_banking
 
 Create a virtual environment and activate it:
