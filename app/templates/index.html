@@ -3,16 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <title>Fraud Detection App</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .form-section {
+      margin-bottom: 1rem;
+    }
+  </style>
 </head>
-<body class="bg-light">
+<body>
 
 <!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">FraudApp</a>
-    <div>
+    <a class="navbar-brand fw-bold" href="/">FraudApp</a>
+    <div class="d-flex">
       <a class="btn btn-outline-primary me-2" href="{{ url_for('dashboard') }}">Dashboard</a>
       <a class="btn btn-outline-secondary" href="{{ url_for('logout') }}">Logout</a>
     </div>
@@ -21,33 +28,37 @@
 
 <div class="container mt-4">
   <div class="text-center mb-4">
-    <h1 class="text-primary">💳 Fraud Detection System</h1>
-    <p class="text-muted">Predict a single transaction or upload a CSV for batch predictions.</p>
+    <h2 class="text-primary">💳 Fraud Detection System</h2>
+    <p class="text-muted">Enter transaction details or upload a CSV file for batch predictions.</p>
   </div>
 
   <!-- Single Transaction Form -->
-  <div class="card mb-5 shadow-sm">
-    <div class="card-header bg-primary text-white">Single Transaction Prediction</div>
+  <div class="card shadow-sm mb-5">
+    <div class="card-header bg-primary text-white">
+      Single Transaction Prediction
+    </div>
     <div class="card-body">
       <form method="POST">
-        {% for col in important_columns %}
-          <div class="mb-3">
+        <div class="row">
+          {% for col in full_columns %}
+          <div class="col-md-4 form-section">
             <label for="{{ col }}" class="form-label">{{ col }}</label>
-            <input type="number" class="form-control" step="any" name="{{ col }}" id="{{ col }}" required>
+            <input type="number" class="form-control" name="{{ col }}" id="{{ col }}" step="any" required>
           </div>
-        {% endfor %}
-        <button type="submit" class="btn btn-primary">Predict</button>
+          {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-success mt-3">Predict</button>
       </form>
 
       {% if prediction is not none %}
-        <div class="alert alert-info mt-3">
+        <div class="alert alert-info mt-4">
           <strong>Prediction:</strong> {{ prediction }}
         </div>
       {% endif %}
     </div>
   </div>
 
-  <!-- Batch Upload Form -->
+  <!-- Batch Upload -->
   <div class="card shadow-sm">
     <div class="card-header bg-secondary text-white">Batch Prediction (CSV Upload)</div>
     <div class="card-body">

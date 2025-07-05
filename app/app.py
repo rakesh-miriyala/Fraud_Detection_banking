@@ -10,7 +10,7 @@ from flask import (
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 
-from blockchain import Blockchain  # ✅ Correct import
+from blockchain import Blockchain
 
 # Flask setup
 app = Flask(__name__, template_folder='templates', static_folder='static')
@@ -40,8 +40,6 @@ SCALER_PATH = os.path.join('model', 'scaler.pkl')
 model = joblib.load(MODEL_PATH)
 scaler = joblib.load(SCALER_PATH)
 
-# ---------------------- Routes ------------------------
-
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
@@ -62,7 +60,6 @@ def signup():
 
     return render_template('signup.html')
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -80,13 +77,11 @@ def login():
 
     return render_template('login.html')
 
-
 @app.route('/logout')
 def logout():
     session.pop('user', None)
     flash('You have been logged out.', 'info')
     return redirect(url_for('login'))
-
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -94,15 +89,14 @@ def index():
         return redirect(url_for('login'))
 
     prediction = None
-    important_cols = ['V4', 'V11', 'V14', 'V17', 'V12', 'V10', 'V16', 'Amount']
-    full_cols = [f'V{i}' for i in range(1, 29)] + ['Amount']
-    default_values = pd.read_csv('data/creditcard.csv')[full_cols].mean()
+    full_columns = [f'V{i}' for i in range(1, 29)] + ['Amount']
+    default_values = pd.read_csv('data/creditcard.csv')[full_columns].mean()
 
     if request.method == 'POST':
         try:
             input_data = request.form
             values = default_values.copy()
-            for col in important_cols:
+            for col in full_columns:
                 values[col] = float(input_data.get(col))
 
             df_input = pd.DataFrame([values])
@@ -110,13 +104,12 @@ def index():
             pred = model.predict(df_input)[0]
             prediction = "Fraudulent" if pred == 1 else "Legitimate"
 
-            # Log result
             log_entry = {
                 "username": session.get("user"),
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 "prediction": prediction
             }
-            for col in important_cols:
+            for col in full_columns:
                 log_entry[col] = values[col]
 
             os.makedirs('logs', exist_ok=True)
@@ -126,14 +119,12 @@ def index():
                 header=not os.path.exists('logs/prediction_logs.csv')
             )
 
-            # Add to blockchain
             fraud_chain.add_block(log_entry)
 
         except Exception as e:
             prediction = f"Error: {e}"
 
-    return render_template('index.html', prediction=prediction, important_columns=important_cols)
-
+    return render_template('index.html', prediction=prediction, full_columns=full_columns)
 
 @app.route('/batch_predict', methods=['GET', 'POST'])
 def batch_predict():
@@ -151,18 +142,25 @@ def batch_predict():
             if not all(col in df.columns for col in required_cols):
                 return f'Missing columns: {required_cols}', 400
 
-            X = df[required_cols]
+            X = df[required_cols].copy()
             X['Amount'] = scaler.transform(X['Amount'].values.reshape(-1, 1))
             df['Prediction'] = model.predict(X)
 
+            # Filter only fraud transactions
+            fraud_df = df[df['Prediction'] == 1]
+
             os.makedirs('logs', exist_ok=True)
             output_file = 'logs/batch_output.csv'
-            df.to_csv(output_file, index=False)
+            fraud_df.to_csv(output_file, index=False)
             static_path = os.path.join('static')
             os.makedirs(static_path, exist_ok=True)
             shutil.copy(output_file, os.path.join(static_path, 'batch_output.csv'))
 
-            table_html = df.head(50).to_html(classes='table table-bordered', index=False)
+            if fraud_df.empty:
+                table_html = "<div class='alert alert-success'>No fraudulent transactions detected 🎉</div>"
+            else:
+                table_html = fraud_df.to_html(classes='table table-bordered', index=False)
+
             return render_template('batch_results.html', table_html=table_html)
 
         except Exception as e:
@@ -170,20 +168,17 @@ def batch_predict():
 
     return render_template('upload.html')
 
-
 @app.route('/dashboard')
 def dashboard():
     if 'user' not in session:
         return redirect(url_for('login'))
     return render_template('dashboard.html')
 
-
 @app.route('/blockchain')
 def view_blockchain():
     if 'user' not in session:
         return redirect(url_for('login'))
     return render_template('blockchain.html', chain=[block.to_dict() for block in fraud_chain.chain])
-
 
 if __name__ == '__main__':
     app.run(debug=True)
