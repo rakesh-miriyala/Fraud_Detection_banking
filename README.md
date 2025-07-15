@@ -58,6 +58,7 @@ Navigate to /blockchain to view all prediction logs with their hashes.
 📷 Screenshots
 
 <img width="920" height="913" alt="image" src="https://github.com/user-attachments/assets/4370809c-ac63-46d4-a21a-d738673a984e" />
+
 ![image](https://github.com/user-attachments/assets/d21393e2-96cf-472e-9573-6535b694520b)
 ![image](https://github.com/user-attachments/assets/79b75b18-abc2-428b-8ad9-74c41d9a1fda)
 
